@@ -5,33 +5,47 @@ using UnityEngine.UI;
 
 public class SwitchToogle : MonoBehaviour
 {
-    [SerializeField] RectTransform uiHandleReckTransform;
-    [SerializeField] Sprite onToggle;
-    [SerializeField] Sprite offToggle;
+    [SerializeField] Toggle toggle;
 
-    Toggle toggle;
-
-    Vector2 handlePos;
 
     public bool BGM, SFX;
 
     private void Start()
     {
         toggle = GetComponent<Toggle>();
-        //handlePos = uiHandleReckTransform.anchoredPosition;
-
-        toggle.onValueChanged.AddListener(OnSwitch);
-
-        if (toggle.isOn)
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        /*if (BGM)
         {
-            //OnSwitch(true);
+            toggle.isOn = PlayerPrefs.GetInt("BGMToggle", 1) == 1; // Default to true (1)
+        }*/
+
+        //toggle.onValueChanged.AddListener(OnSwitch);
+
+        if (audioManager != null)
+        {
+            Debug.Log("AudioManager");
+        }
+
+        if (BGM)
+        {
+            if (!AudioManager.Instance.musicSource.mute)
+            {
+                transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true;
+                toggle.isOn = true;
+            }
+            else
+            {
+                transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
+                toggle.isOn = false;
+            }
+
         }
 
     }
 
     private void Update()
     {
-        if (BGM)
+        /*if (BGM)
         {
             if (!AudioManager.Instance.musicSource.mute)
             {
@@ -41,7 +55,7 @@ public class SwitchToogle : MonoBehaviour
             {
                 OnSwitch(false);
             }
-        }
+        }*/
 
         /*if (SFX)
         {
@@ -59,10 +73,21 @@ public class SwitchToogle : MonoBehaviour
 
     void OnSwitch(bool on)
     {
-        //toggle.isOn = on ? !on : false;
-        //uiHandleReckTransform.anchoredPosition = on ? handlePos * -1 : handlePos;
-        //transform.GetChild(0).GetComponent<Image>().sprite = on ? onToggle: offToggle;
+        transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = on;
     }
 
+    public void toggleOn()
+    {
+        if (toggle.isOn)
+        {
+            AudioManager.Instance.musicSource.mute = false;
+            transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            AudioManager.Instance.musicSource.mute = true;
+            transform.GetChild(0).GetChild(0).GetComponent<Image>().enabled = false;
+        }
+    }
 
 }

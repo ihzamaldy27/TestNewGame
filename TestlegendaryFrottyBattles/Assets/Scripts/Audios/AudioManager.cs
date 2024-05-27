@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -57,9 +58,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SetVolumeBGM(float value)
+    public void SetVolumeBGM(Slider value)
     {
-        musicSource.volume = value;
+        musicSource.volume = value.value;
+        Save(value.value);
+    }
+
+    void Save(float value)
+    {
+        PlayerPrefs.SetFloat("BGMVolume", value);
     }
 
     public void ToggleMusic()

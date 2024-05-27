@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/IhzamTest.unity
+    guid: 798042109ba250b4087dfc10c9eb4a6e
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/PindahSceneIni.unity
+    guid: 52ed2e32ad7197b4aa3ada42883e5dc5
   m_configObjects: {}
